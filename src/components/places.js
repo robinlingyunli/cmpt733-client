@@ -50,7 +50,7 @@ export default function Places({ setOffice, setLocations }) {
   };
   const sendLatLonToBackend = async (lat, lng) => {
     try {
-      const response = await fetch("http://localhost:5000/api/location", {
+      const response = await fetch("http://52.9.248.230/api/location", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
