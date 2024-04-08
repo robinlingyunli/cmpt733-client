@@ -1,6 +1,6 @@
 .app-container {
   display: flex;
-  height: 100vh;
+  height: 90vh;
 }
 
 .sidebar {
@@ -21,12 +21,13 @@
 
 .secondary-navbar {
   display: flex;
-  background-color: #242F3E;
+  /* background-color: #242F3E; */
   padding: 10px;
 }
 
 .content {
-  border: 1px black solid;
+  /* border: 10px black solid; */
+  height: 10px;
   flex-grow: 1;
   background-color: #fff;
   padding: 20px;

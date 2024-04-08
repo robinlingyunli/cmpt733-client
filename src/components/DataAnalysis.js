@@ -20,7 +20,7 @@ const Sidebar = ({ onItemSelected }) => {
     <Box
       sx={{
         width: 280,
-        bgcolor: '#222D32', 
+        // bgcolor: '#222D32', 
         color: 'white', 
         '& .MuiListItemIcon-root': {
           color: 'white', 
@@ -77,13 +77,13 @@ const SecondaryNavbar = ({ filters, onFilterSelected, selectedFilter }) => {
       case 'Temperature':
         return 'Temperature';
       case 'Wind_Chill':
-        return 'Wind_Chill';
+        return 'Wind Chill';
       case 'Humidity':
         return 'Humidity';
       case 'Visibility':
         return 'Visibility';
       case 'Road':
-        return 'Road Situation';
+        return 'Road conditions';
       default:
         return "default"
     }
@@ -141,7 +141,6 @@ const Content = ({ selectedItem, secondaryFilter}) => {
 
   return (
     <div className="content">
-      {/* <h2>Displaying content for {selectedItem} with filter: {secondaryFilter}</h2> */}
       {renderChart()}
     </div>
   );

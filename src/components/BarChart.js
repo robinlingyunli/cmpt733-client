@@ -19,7 +19,7 @@ function BarChart({ props }) {
       case 'Temperature':
         return 'Temperature (Fahrenheit)';
       case 'WindChill':
-        return 'Wind_Chill (Fahrenheit)';
+        return 'Wind Chill (Fahrenheit)';
       case 'Humidity':
         return 'Humidity';
       case 'Visibility':

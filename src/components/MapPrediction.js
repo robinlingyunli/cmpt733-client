@@ -1,22 +1,23 @@
-import { useState, useMemo, useCallback, useRef } from "react";
+import React, { useState, useMemo, useCallback, useRef } from "react";
 import {
   GoogleMap,
   useLoadScript,
   Marker,
-  DirectionsRenderer,
   Circle,
-  MarkerClusterer,
 } from "@react-google-maps/api";
 import "../styles/globals.css";
 import Places from "./places";
+
 const mapContainerStyle = {
   width: "80vw",
   height: "100vh",
 };
+
 const libraries = ["places"];
 const MapPrediction = () => {
   const [officePosition, setOfficePosition] = useState(null);
-  const center = useMemo(() => ({ lat: 49.276765, lng: -122.917957 }), []);
+  const [locations, setLocations] = useState([]);
+  const center = useMemo(() => ({ lat: 40.679375, lng: -74.003151 }), []);
   const options = useMemo(
     () => ({
       mapId: "55474bd884220168",
@@ -25,39 +26,73 @@ const MapPrediction = () => {
     }),
     []
   );
+
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAOzdWMGEEIt-yYbLgI5xUZqDQz4LLqpYE",
+    googleMapsApiKey: "AIzaSyAOzdWMGEEIt-yYbLgI5xUZqDQz4LLqpYE", // Use environment variable for API key
     libraries,
   });
 
-  const mapRef = useRef();
+  const mapRef = useRef(null);
+
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
-    // You can now use map.setTilt(45) and map.setHeading(90) here
-    if (map.getTilt() !== 45) {
-      map.setTilt(45);
-    }
-    map.setHeading(90); // Rotate 90 degrees from North
   }, []);
 
-  if (loadError) return <div>Error loading maps</div>;
-  if (!isLoaded) return <div>Loading maps</div>;
+  // Define marker icons
+  const defaultIcon = null; // Google Maps default marker icon
+  const specialIcon =
+    "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
+  const handleMouseEnter = (index) => {
+    setLocations(
+      locations.map((loc, i) => ({
+        ...loc,
+        isActive: i === index,
+      }))
+    );
+  };
 
+  const handleMouseLeave = () => {
+    setLocations(
+      locations.map((loc) => ({
+        ...loc,
+        isActive: false,
+      }))
+    );
+  };
+
+  if (loadError) return <div></div>;
+  if (!isLoaded) return <div></div>;
   return (
     <div className="container">
       <div className="controls">
-        <h1>Commute?</h1>
+        <h1>Destination?</h1>
         <Places
           setOffice={(position) => {
             setOfficePosition(position);
             mapRef.current?.panTo(position);
           }}
+          setLocations={setLocations}
         />
+        <ul>
+          {locations.map((location, index) => (
+            <li
+              className="list-item"
+              key={index}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
+            >
+              Point {index + 1}:{" "}
+              <span className="distance">
+                {location.distance.toFixed(2)} km away
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
       <div className="map">
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
-          zoom={18}
+          zoom={15}
           center={center}
           mapTypeId={"satellite"}
           onLoad={onMapLoad}
@@ -66,25 +101,32 @@ const MapPrediction = () => {
             <>
               <Marker
                 position={officePosition}
-                // icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+                icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
               />
               <Circle
                 center={officePosition}
-                radius={100}
+                radius={1000}
                 options={closeOptions}
               />
               <Circle
                 center={officePosition}
-                radius={200}
+                radius={2000}
                 options={middleOptions}
               />
               <Circle
                 center={officePosition}
-                radius={300}
+                radius={3000}
                 options={farOptions}
               />
             </>
           )}
+          {locations.map((loc, index) => (
+            <Marker
+              key={index}
+              position={{ lat: loc.lat, lng: loc.lng }}
+              icon={loc.isActive ? specialIcon : defaultIcon}
+            />
+          ))}
         </GoogleMap>
       </div>
     </div>

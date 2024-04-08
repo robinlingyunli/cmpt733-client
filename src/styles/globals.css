@@ -50,3 +50,51 @@ a {
   width: 100%;
   padding: 0.5rem;
 }
+
+.x-button {
+  position: "absolute";
+  right: "10px";
+  top: "50%";
+  transform: "translateY(-50%)";
+  cursor: "pointer";
+  background: "transparent";
+  border: "none";
+  color: "#999";
+  fontWeight: "bold";
+}
+
+.list-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px; /* Adjust as necessary */
+  font-family: 'Arial', sans-serif; /* Consider using a web-friendly font */
+}
+
+.list-container h2 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.list-item {
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 8px; /* Space between items */
+}
+
+.list-item:hover {
+  background-color: #f2f2f2;
+}
+
+.distance {
+  color: #666;
+  font-size: 0.9em; /* Smaller font for distance */
+}
+
+/* If using a :hover effect in JS, you can also add an .active class and style it similarly to :hover */
+.list-item.active, .list-item:hover {
+  background-color: #e8e8e8; /* Active or hover state color */
+}

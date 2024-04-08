@@ -1,30 +1,33 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
+import React from "react";
+import { Link } from "react-router-dom";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+
+import './css/Navbar.css'; 
 
 function Navbar() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static"> 
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-          </IconButton>
-          <Button color="inherit" component={Link} to="/" sx={{ fontSize: '1rem', marginLeft:20, marginRight: 20, textTransform: 'none'  }}>Home Page</Button>
-          <Button color="inherit" component={Link} to="/DataIntro" sx={{ fontSize: '1rem',marginRight: 20, textTransform: 'none'  }}>Data Source</Button>
-          <Button color="inherit" component={Link} to="/DataAnalysis" sx={{ fontSize: '1rem',marginRight: 20, textTransform: 'none'   }}>Data Analysis</Button>
-          <Button color="inherit" component={Link} to="/MapPrediction" sx={{ fontSize: '1rem',marginRight: 10 ,textTransform: 'none'  }}>Flight Delay Prediction</Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <>
+    <nav>
+      <ul>
+        <li>
+          <a href="/">Home Page</a>
+        </li>
+        <li>
+          <a href="/DataIntro">Data Source</a>
+        </li>
+        <li>
+          <a href="/DataAnalysis">Data Analysis</a>
+        </li>
+        <li>
+          <a href="/MapPrediction">Map Prediction</a>
+        </li>
+      </ul>
+    </nav>
+    </>
   );
 }
 
