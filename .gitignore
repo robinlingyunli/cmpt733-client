@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+/Prediction/data/2022_real_data.csv
 
 # testing
 /coverage
