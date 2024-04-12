@@ -7,8 +7,12 @@ function LineChart({props}) {
   const [data, setData] = useState({});
 
   useEffect(() => {
+    // fetch(`http://localhost:5000/lineChartData/${props}`)
     fetch(`http://52.9.248.230/lineChartData/${props}`)
-      .then(response => response.json())
+      .then(response => {
+        console.log('Response received: ', response);
+        return response.json();
+      })
       .then(data => setData(data))
       .catch(error => console.error('Error fetching data: ', error));
   }, [props]);

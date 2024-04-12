@@ -31,6 +31,12 @@ function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
 export default function Places({ setOffice, setLocations }) {
+  const [humidity, setHumidity] = useState("");
+  const [temperature, setTemperature] = useState("");
+  const [condition, setCondition] = useState("");
+  const [selectedLat, setSelectedLat] = useState(null);
+  const [selectedLng, setSelectedLng] = useState(null);
+  const [date, setDate] = useState("");
   const [selectionMade, setSelectionMade] = useState(false);
   const {
     ready,
@@ -48,35 +54,70 @@ export default function Places({ setOffice, setLocations }) {
     setValue("");
     clearSuggestions();
   };
-  const sendLatLonToBackend = async (lat, lng) => {
+  const handlePredictionRequest = async () => {
+    // Check if latitude or longitude is not selected
+    if (selectedLat == null || selectedLng == null) {
+      console.error("No location selected");
+      return;
+    }
+
+    // Construct the payload with user inputs
+    const payload = {
+      lat: selectedLat,
+      lng: selectedLng,
+      humidity,
+      temperature,
+      condition,
+      date,
+    };
+
     try {
+      // Make the POST request with the payload
       const response = await fetch("http://52.9.248.230/api/location", {
+      // const response = await fetch("http://localhost:5000/api/location", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ lat, lng }),
+        body: JSON.stringify(payload),
       });
+
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       const locations = await response.json();
-      // Assuming setOffice or another state hook will be used to handle the received data
-      console.log("Received from backend:", locations);
-      // setLocations(locations);
-      const locationsWithDistance = locations.map((location) => {
-        const distance = getDistanceFromLatLonInKm(
-          lat,
-          lng,
-          location.lat,
-          location.lng
-        );
-        return { ...location, distance, isActive: false }; // Append distance to each location
-      });
+      // console.log(typeof locations);
+      // console.log(locations);
+      const parsed_location = await JSON.parse(locations);
+      // console.log(typeof parsed_location);
+      // console.log(parsed_location);
+      const locationsObject = parsed_location.reduce((acc, loc, index) => {
+        acc[index] = loc;
+        return acc;
+      }, {});
+      // console.log(typeof locationsObject);
+      // console.log(locationsObject);
+      // console.log(locationsObject);
+      const locationsWithDistance = Object.entries(locationsObject).map(
+        (location) => {
+          // Calculate the distance from the selected location
+          // console.log(location);
+          const distance = getDistanceFromLatLonInKm(
+            selectedLat,
+            selectedLng,
+            location[1].lat,
+            location[1].lng
+          );
+
+          // Return a new object for each location including the calculated distance
+          return { ...location[1], distance, isActive: false };
+        }
+      );
+
+      // Update your state with the new locations array
       setLocations(locationsWithDistance);
-      // Here you might want to update the state or perform other actions with the locations
     } catch (error) {
-      console.error("There was a problem with your fetch operation:", error);
+      console.error("Failed to fetch predictions:", error);
     }
   };
 
@@ -87,8 +128,9 @@ export default function Places({ setOffice, setLocations }) {
     try {
       const results = await getGeocode({ address });
       const { lat, lng } = await getLatLng(results[0]);
-      setOffice({ lat, lng }); // This sets the selected office location on the map
-      sendLatLonToBackend(lat, lng); // Correctly passing lat and lng
+      setOffice({ lat, lng });
+      setSelectedLat(lat);
+      setSelectedLng(lng);
     } catch (error) {
       console.error("Error: ", error);
       setSelectionMade(false);
@@ -104,7 +146,7 @@ export default function Places({ setOffice, setLocations }) {
           disabled={!ready}
           className="combobox-input"
           placeholder="Enter a place name or postal code"
-          style={{ width: "100%", paddingRight: "30px" }} // Ensure input takes full width of the container
+          style={{ height: "120%", width: "100%", paddingRight: "30px" }} // Ensure input takes full width of the container
         />
         {value && (
           <button
@@ -126,6 +168,63 @@ export default function Places({ setOffice, setLocations }) {
           </button>
         )}
       </div>
+      <div>
+        <label htmlFor="humidity">Humidity (%): </label>
+        <input
+          type="number"
+          id="humidity"
+          value={humidity}
+          onChange={(e) => setHumidity(e.target.value)}
+          placeholder="Enter Humidity"
+        />
+      </div>
+      <div>
+        <label htmlFor="temperature">Temperature (°C): </label>
+        <input
+          type="number"
+          id="temperature"
+          value={temperature}
+          onChange={(e) => setTemperature(e.target.value)}
+          placeholder="Enter Temperature"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="condition">Weather Condition: </label>
+        <select
+          id="condition"
+          value={condition}
+          onChange={(e) => setCondition(e.target.value)}
+        >
+          <option value="">Select a condition</option>
+          <option value="Cloudy">Cloudy</option>
+          <option value="Sunny">Sunny</option>
+          <option value="Drizzle">Drizzle</option>
+          <option value="Fair">Fair</option>
+          <option value="Rain">Rain</option>
+          <option value="Snow">Snow</option>
+          <option value="T-Storm">T-Storm</option>
+          <option value="Tornado">Tornado</option>
+          <option value="Thunder ">Thunder </option>
+          <option value="Fog">Fog</option>
+          <option value="Shower">Shower</option>
+          <option value="Dust">Dust</option>
+          <option value="Haze">Haze</option>
+          <option value="Windy">Windy</option>
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor="date">Date: </label>
+        <input
+          type="datetime-local"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          min="2020-01-01T00:00"
+          max="2030-12-31T23:59"
+        />
+      </div>
+      <button onClick={() => handlePredictionRequest()}>Predict</button>
       <ComboboxPopover>
         {status === "OK" ? (
           <ComboboxList>

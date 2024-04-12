@@ -7,6 +7,7 @@ function BarChart({ props }) {
   const [chartData, setChartData] = useState({});
 
   useEffect(() => {
+    // fetch(`http://localhost:5000/barChartData/${props}`)
     fetch(`http://52.9.248.230/barChartData/${props}`)
       .then(response => response.json())
       .then(data => setChartData(data))

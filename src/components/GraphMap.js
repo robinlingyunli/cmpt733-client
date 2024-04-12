@@ -8,6 +8,7 @@ const GraphMap = () => {
   useEffect(() => {
     async function fetchData() {
       try {
+        // const response = await fetch('http://localhost:5000/graphMap/state', {
         const response = await fetch('http://52.9.248.230/graphMap/state', {
           method: 'GET',
           headers: {

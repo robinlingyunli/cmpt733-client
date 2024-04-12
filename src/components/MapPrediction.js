@@ -3,6 +3,7 @@ import {
   GoogleMap,
   useLoadScript,
   Marker,
+  InfoWindow,
   Circle,
 } from "@react-google-maps/api";
 import "../styles/globals.css";
@@ -10,7 +11,7 @@ import Places from "./places";
 
 const mapContainerStyle = {
   width: "80vw",
-  height: "100vh",
+  height: "140vh",
 };
 
 const libraries = ["places"];
@@ -81,9 +82,11 @@ const MapPrediction = () => {
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
             >
-              Point {index + 1}:{" "}
+              Point {index + 1}: <br />
               <span className="distance">
                 {location.distance.toFixed(2)} km away
+                <br />
+                Probablity: {location.prob}
               </span>
             </li>
           ))}
