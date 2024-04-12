@@ -22,7 +22,7 @@ a {
 
 .controls {
   width: 20%;
-  height: 140%;
+  height: 180%;
   padding: 1rem;
   background: #14161a;
   color: #fff;
@@ -98,4 +98,59 @@ a {
 /* If using a :hover effect in JS, you can also add an .active class and style it similarly to :hover */
 .list-item.active, .list-item:hover {
   background-color: #e8e8e8; /* Active or hover state color */
+}
+
+div {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+input[type="number"],
+input[type="datetime-local"],
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Make sure padding doesn't affect the overall width */
+}
+
+input[type="number"]:focus,
+input[type="datetime-local"]:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 768px) {
+  input[type="number"],
+  input[type="datetime-local"],
+  select,
+  button {
+    width: 100%;
+  }
 }

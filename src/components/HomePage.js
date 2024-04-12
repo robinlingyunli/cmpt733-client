@@ -13,7 +13,7 @@ function HomePage() {
           View Data Analysis Outcomes
         </Link>
         <Link to="/MapPrediction" className="block">
-          Start Prediction for Flights
+          Start Prediction for Accidents
         </Link>
       </div>
     </div>

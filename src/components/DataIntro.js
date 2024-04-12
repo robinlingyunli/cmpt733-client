@@ -43,6 +43,9 @@ function DataIntro() {
   
   return (
     <div className='TrainingModelsContainer'>
+      <h1>
+        US Accidents (2016 - 2023)
+      </h1>
       <h1>Introduction</h1>
       <div style={{paddingTop:'0px', paddingBottom:'0px'}}>Our dataset &nbsp;            
         <a href="https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents" target="_blank" rel="noopener noreferrer">
@@ -55,12 +58,7 @@ function DataIntro() {
         holds about 7.7 million records of traffic accidents.
 
       </div>
-      <h2>Below are the content of our dataset and the tables of attributes</h2>
-      <h1>
-        <h4>
-        US Accidents (2016 - 2023)
-        </h4>
-      </h1>
+      <h2>Below are the content of our dataset and the tables of some attributes</h2>
       <DataTable1 />
     </div>
   )

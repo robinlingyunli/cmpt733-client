@@ -73,8 +73,8 @@ export default function Places({ setOffice, setLocations }) {
 
     try {
       // Make the POST request with the payload
-      const response = await fetch("http://52.9.248.230/api/location", {
       // const response = await fetch("http://localhost:5000/api/location", {
+      const response = await fetch("http://52.9.248.230/api/location", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -146,7 +146,7 @@ export default function Places({ setOffice, setLocations }) {
           disabled={!ready}
           className="combobox-input"
           placeholder="Enter a place name or postal code"
-          style={{ height: "120%", width: "100%", paddingRight: "30px" }} // Ensure input takes full width of the container
+          style={{ width: "100%", paddingRight: "30px" }} // Ensure input takes full width of the container
         />
         {value && (
           <button

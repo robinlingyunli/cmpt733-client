@@ -11,7 +11,7 @@ import Places from "./places";
 
 const mapContainerStyle = {
   width: "80vw",
-  height: "140vh",
+  height: "180vh",
 };
 
 const libraries = ["places"];
@@ -108,17 +108,17 @@ const MapPrediction = () => {
               />
               <Circle
                 center={officePosition}
-                radius={1000}
+                radius={500}
                 options={closeOptions}
               />
               <Circle
                 center={officePosition}
-                radius={2000}
+                radius={1000}
                 options={middleOptions}
               />
               <Circle
                 center={officePosition}
-                radius={3000}
+                radius={1500}
                 options={farOptions}
               />
             </>
@@ -147,21 +147,21 @@ const closeOptions = {
   ...defaultOptions,
   zIndex: 3,
   fillOpacity: 0.05,
-  strokeColor: "#8BC34A",
-  fillColor: "#8BC34A",
+  strokeColor: "#4A7B2F", // Darker shade of green
+  fillColor: "#4A7B2F",
 };
 const middleOptions = {
   ...defaultOptions,
   zIndex: 2,
   fillOpacity: 0.05,
-  strokeColor: "#FBC02D",
-  fillColor: "#FBC02D",
+  strokeColor: "#C79100", // Darker shade of yellow/orange
+  fillColor: "#C79100",
 };
 const farOptions = {
   ...defaultOptions,
   zIndex: 1,
   fillOpacity: 0.05,
-  strokeColor: "#FF5252",
-  fillColor: "#FF5252",
+  strokeColor: "#BF360C", // Darker shade of red
+  fillColor: "#BF360C",
 };
 export default MapPrediction;
